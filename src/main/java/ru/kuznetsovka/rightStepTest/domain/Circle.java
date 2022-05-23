@@ -19,6 +19,6 @@ public class Circle {
     @Column(name = "id")
     private Long id;
     private double radius;
-    private Double area;
-    private Double perimeter;
+    @Enumerated(EnumType.STRING)
+    private Color color;
 }

@@ -20,7 +20,6 @@ public class Rectangle {
     private Long id;
     private double length;
     private double width;
-    private double diagonal;
-    private Double area;
-    private Double perimeter;
+    @Enumerated(EnumType.STRING)
+    private Color color;
 }

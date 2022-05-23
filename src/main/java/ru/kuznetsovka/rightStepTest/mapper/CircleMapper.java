@@ -13,7 +13,6 @@ public interface CircleMapper {
   CircleMapper MAPPER = Mappers.getMapper(CircleMapper.class);
 
   Circle toCircle(CircleDto dto);
-
   List<Circle> toCircleList(List<CircleDto> circles);
 
   @InheritInverseConfiguration

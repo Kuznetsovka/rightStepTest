@@ -1,5 +1,5 @@
 package ru.kuznetsovka.rightStepTest.domain;
 
 public enum Color {
-    RED, GREEN, BLUE, YELLOW
+    RED, GREEN, BLUE, YELLOW,BLACK
 }

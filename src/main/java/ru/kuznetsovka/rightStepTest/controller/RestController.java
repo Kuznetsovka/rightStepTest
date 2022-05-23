@@ -19,6 +19,7 @@ import java.util.List;
 public class RestController {
   private final FigureService figureService;
 
+
   @Autowired
   public RestController(FigureService figureService) {
     this.figureService = figureService;
@@ -26,7 +27,7 @@ public class RestController {
 
   @GetMapping(value = "/circles",produces = "application/json")
   public List<CircleDto> getAllHumidifiers() {
-    return figureService.getAllCircles();
+    return figureService.getAllCirclesByAscRadius();
   }
 
   @ExceptionHandler
