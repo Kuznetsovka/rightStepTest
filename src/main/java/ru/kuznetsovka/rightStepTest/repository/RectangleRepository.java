@@ -6,5 +6,4 @@ import ru.kuznetsovka.rightStepTest.domain.Rectangle;
 
 @Repository
 public interface RectangleRepository extends JpaRepository<Rectangle, Long> {
-
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kuznetsovka.rightStepTest.dto.CircleDto;
+import ru.kuznetsovka.rightStepTest.dto.RectangleDto;
 import ru.kuznetsovka.rightStepTest.exception.FigureNotFoundException;
 import ru.kuznetsovka.rightStepTest.service.FigureService;
 
@@ -26,8 +27,13 @@ public class RestController {
   }
 
   @GetMapping(value = "/circles",produces = "application/json")
-  public List<CircleDto> getAllHumidifiers() {
+  public List<CircleDto> getAllCirclesByAscRadius() {
     return figureService.getAllCirclesByAscRadius();
+  }
+
+  @GetMapping(value = "/rectangles",produces = "application/json")
+  public List<RectangleDto> getAllRectanglesByAscDiagonals() {
+    return figureService.getAllRectanglesByAscDiagonals();
   }
 
   @ExceptionHandler

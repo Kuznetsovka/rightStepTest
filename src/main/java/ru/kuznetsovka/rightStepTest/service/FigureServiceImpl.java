@@ -47,6 +47,17 @@ public class FigureServiceImpl implements FigureService {
     }
 
     @Override
+    public List<RectangleDto> getAllRectanglesByAscDiagonals() {
+        return getAllRectangles().stream().sorted(Comparator.comparing(RectangleDto::getDiagonal)).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<RectangleDto> getAllRectangles() {
+        return rectangleMapper.fromRectangleList(rectangleRepository.findAll());
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<CircleDto> getAllCircles() {
         return circleMapper.fromCircleList(circleRepository.findAll());

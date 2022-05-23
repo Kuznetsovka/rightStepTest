@@ -11,6 +11,12 @@ import java.util.List;
 public interface FigureService {
 
     @Transactional(readOnly = true)
+    List<RectangleDto> getAllRectanglesByAscDiagonals();
+
+    @Transactional(readOnly = true)
+    List<RectangleDto> getAllRectangles();
+
+    @Transactional(readOnly = true)
     List<CircleDto> getAllCircles();
 
     @Transactional
