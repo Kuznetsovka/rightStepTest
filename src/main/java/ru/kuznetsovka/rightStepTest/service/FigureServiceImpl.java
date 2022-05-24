@@ -30,60 +30,55 @@ public class FigureServiceImpl implements FigureService {
     public FigureServiceImpl(CircleRepository circleRepository, RectangleRepository rectangleRepository) {
         this.circleRepository = circleRepository;
         this.rectangleRepository = rectangleRepository;
-        //init();
-    }
-
-    private void init(){
-        saveCircle(new CircleDto(10,Color.BLUE));
-        saveCircle(new CircleDto(2.1,Color.RED));
-        saveCircle(new CircleDto(0.5,Color.BLACK));
-        RectangleDto rectangleDto = RectangleDto.builder()
-                .length(3.1)
-                .width(2.1)
-                .color(Color.BLUE)
-                .build();
-        saveRectangle(rectangleDto);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<RectangleDto> getAllRectangles() {
+        log.info("Запрос всех прямоугольникой.");
         return rectangleMapper.fromRectangleList(rectangleRepository.findAll());
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<CircleDto> getAllCircles() {
+        log.info("Запрос всех кругов.");
         return circleMapper.fromCircleList(circleRepository.findAll());
     }
 
     @Override
     @Transactional
     public Circle saveCircle(CircleDto circleDto) {
+        log.info("Сохранение круга:" + circleDto);
         return circleRepository.save(circleMapper.toCircle(circleDto));
     }
 
     @Override
     @Transactional
     public Rectangle saveRectangle(RectangleDto rectangleDto) {
+        log.info("Сохранение прямоугольника:" + rectangleDto);
         return rectangleRepository.save(rectangleMapper.toRectangle(rectangleDto));
     }
 
     @Override
     public List<CircleDto> getAllCirclesByAscRadius() {
+        log.info("Получение всех кругов в порядке возрастания радиусов");
         return getAllCircles().stream().sorted(Comparator.comparing(CircleDto::getRadius)).collect(Collectors.toList());
     }
 
     @Override
     public List<FigureDto> getAllFiguresByColorByAscArea(Color color) {
         List<FigureDto> lists = getAllFiguresByColor(color);
+        log.info("Получение всех фигур цвета " + color + " в порядке возрастания площади");
         return lists.stream().sorted(Comparator.comparing(FigureDto::getArea)).collect(Collectors.toList());
     }
 
-    private List<FigureDto> getAllFiguresByColor(Color color) {
+    @Override
+    public List<FigureDto> getAllFiguresByColor(Color color) {
         List<FigureDto> figureDtos = new ArrayList<>();
         figureDtos.addAll(rectangleMapper.fromRectangleList(rectangleRepository.findAllByColor(color)));
         figureDtos.addAll(circleMapper.fromCircleList(circleRepository.findAllByColor(color)));
+        log.info("Получение всех фигур цвета" + color);
         return figureDtos;
     }
 

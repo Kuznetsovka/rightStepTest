@@ -14,6 +14,8 @@ public interface FigureService {
 
     List<FigureDto> getAllFiguresByColorByAscArea(Color color);
 
+    List<FigureDto> getAllFiguresByColor(Color color);
+
     @Transactional(readOnly = true)
     List<RectangleDto> getAllRectanglesByAscDiagonals();
 
