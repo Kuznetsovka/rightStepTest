@@ -6,15 +6,18 @@ import ru.kuznetsovka.rightStepTest.domain.Circle;
 import ru.kuznetsovka.rightStepTest.domain.Color;
 import ru.kuznetsovka.rightStepTest.domain.Rectangle;
 import ru.kuznetsovka.rightStepTest.dto.CircleDto;
+import ru.kuznetsovka.rightStepTest.dto.FigureDto;
 import ru.kuznetsovka.rightStepTest.dto.RectangleDto;
 import ru.kuznetsovka.rightStepTest.mapper.CircleMapper;
 import ru.kuznetsovka.rightStepTest.mapper.RectangleMapper;
 import ru.kuznetsovka.rightStepTest.repository.CircleRepository;
 import ru.kuznetsovka.rightStepTest.repository.RectangleRepository;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class FigureServiceImpl implements FigureService {
@@ -31,8 +34,8 @@ public class FigureServiceImpl implements FigureService {
 
     private void init(){
         saveCircle(new CircleDto(10,Color.BLUE));
-        saveCircle(new CircleDto(2.1,Color.BLUE));
-        saveCircle(new CircleDto(0.5,Color.BLUE));
+        saveCircle(new CircleDto(2.1,Color.RED));
+        saveCircle(new CircleDto(0.5,Color.BLACK));
         RectangleDto rectangleDto = RectangleDto.builder()
                 .length(3.1)
                 .width(2.1)
@@ -44,6 +47,19 @@ public class FigureServiceImpl implements FigureService {
     @Override
     public List<CircleDto> getAllCirclesByAscRadius() {
         return getAllCircles().stream().sorted(Comparator.comparing(CircleDto::getRadius)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FigureDto> getAllFiguresByColorByAscArea(Color color) {
+        List<FigureDto> lists = getAllFiguresByColor(color);
+        return lists.stream().sorted(Comparator.comparing(FigureDto::getArea)).collect(Collectors.toList());
+    }
+
+    private List<FigureDto> getAllFiguresByColor(Color color) {
+        List<FigureDto> figureDtos = new ArrayList<>();
+        figureDtos.addAll(rectangleMapper.fromRectangleList(rectangleRepository.findAllByColor(color)));
+        figureDtos.addAll(circleMapper.fromCircleList(circleRepository.findAllByColor(color)));
+        return figureDtos;
     }
 
     @Override

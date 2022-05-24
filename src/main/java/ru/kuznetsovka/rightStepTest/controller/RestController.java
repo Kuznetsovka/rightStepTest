@@ -2,14 +2,11 @@ package ru.kuznetsovka.rightStepTest.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import ru.kuznetsovka.rightStepTest.domain.Color;
 import ru.kuznetsovka.rightStepTest.dto.CircleDto;
+import ru.kuznetsovka.rightStepTest.dto.FigureDto;
 import ru.kuznetsovka.rightStepTest.dto.RectangleDto;
-import ru.kuznetsovka.rightStepTest.exception.FigureNotFoundException;
 import ru.kuznetsovka.rightStepTest.service.FigureService;
 
 import java.util.List;
@@ -19,7 +16,6 @@ import java.util.List;
 @RequestMapping("/")
 public class RestController {
   private final FigureService figureService;
-
 
   @Autowired
   public RestController(FigureService figureService) {
@@ -36,8 +32,8 @@ public class RestController {
     return figureService.getAllRectanglesByAscDiagonals();
   }
 
-  @ExceptionHandler
-  public ResponseEntity<?> handleException(FigureNotFoundException exception) {
-    return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+  @GetMapping(value = "/rectangles",produces = "application/json" , params = {"c"})
+  public List<FigureDto> getAllFiguresByColorByAscArea(@RequestParam("c") Color color) {
+    return figureService.getAllFiguresByColorByAscArea(color);
   }
 }
