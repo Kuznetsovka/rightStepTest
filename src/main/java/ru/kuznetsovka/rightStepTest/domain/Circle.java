@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "tbl_rounds")
+@Table(name = "tbl_circles")
 public class Circle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

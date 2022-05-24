@@ -1,5 +1,6 @@
 package ru.kuznetsovka.rightStepTest.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kuznetsovka.rightStepTest.domain.Circle;
@@ -17,9 +18,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
+@Slf4j
 public class FigureServiceImpl implements FigureService {
     private final CircleMapper circleMapper = CircleMapper.MAPPER;
     private final RectangleMapper rectangleMapper = RectangleMapper.MAPPER;
@@ -29,7 +30,7 @@ public class FigureServiceImpl implements FigureService {
     public FigureServiceImpl(CircleRepository circleRepository, RectangleRepository rectangleRepository) {
         this.circleRepository = circleRepository;
         this.rectangleRepository = rectangleRepository;
-        init();
+        //init();
     }
 
     private void init(){
@@ -42,29 +43,6 @@ public class FigureServiceImpl implements FigureService {
                 .color(Color.BLUE)
                 .build();
         saveRectangle(rectangleDto);
-    }
-
-    @Override
-    public List<CircleDto> getAllCirclesByAscRadius() {
-        return getAllCircles().stream().sorted(Comparator.comparing(CircleDto::getRadius)).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<FigureDto> getAllFiguresByColorByAscArea(Color color) {
-        List<FigureDto> lists = getAllFiguresByColor(color);
-        return lists.stream().sorted(Comparator.comparing(FigureDto::getArea)).collect(Collectors.toList());
-    }
-
-    private List<FigureDto> getAllFiguresByColor(Color color) {
-        List<FigureDto> figureDtos = new ArrayList<>();
-        figureDtos.addAll(rectangleMapper.fromRectangleList(rectangleRepository.findAllByColor(color)));
-        figureDtos.addAll(circleMapper.fromCircleList(circleRepository.findAllByColor(color)));
-        return figureDtos;
-    }
-
-    @Override
-    public List<RectangleDto> getAllRectanglesByAscDiagonals() {
-        return getAllRectangles().stream().sorted(Comparator.comparing(RectangleDto::getDiagonal)).collect(Collectors.toList());
     }
 
     @Override
@@ -89,5 +67,28 @@ public class FigureServiceImpl implements FigureService {
     @Transactional
     public Rectangle saveRectangle(RectangleDto rectangleDto) {
         return rectangleRepository.save(rectangleMapper.toRectangle(rectangleDto));
+    }
+
+    @Override
+    public List<CircleDto> getAllCirclesByAscRadius() {
+        return getAllCircles().stream().sorted(Comparator.comparing(CircleDto::getRadius)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FigureDto> getAllFiguresByColorByAscArea(Color color) {
+        List<FigureDto> lists = getAllFiguresByColor(color);
+        return lists.stream().sorted(Comparator.comparing(FigureDto::getArea)).collect(Collectors.toList());
+    }
+
+    private List<FigureDto> getAllFiguresByColor(Color color) {
+        List<FigureDto> figureDtos = new ArrayList<>();
+        figureDtos.addAll(rectangleMapper.fromRectangleList(rectangleRepository.findAllByColor(color)));
+        figureDtos.addAll(circleMapper.fromCircleList(circleRepository.findAllByColor(color)));
+        return figureDtos;
+    }
+
+    @Override
+    public List<RectangleDto> getAllRectanglesByAscDiagonals() {
+        return getAllRectangles().stream().sorted(Comparator.comparing(RectangleDto::getDiagonal)).collect(Collectors.toList());
     }
 }

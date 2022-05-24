@@ -12,9 +12,4 @@ public class GlobalControllerExceptionHandler {
     public ResponseEntity<String> handleConflict(RuntimeException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
-
-    @ExceptionHandler
-    public ResponseEntity<?> handleException(FigureNotFoundException exception) {
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
-    }
 }
