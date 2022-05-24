@@ -35,14 +35,14 @@ public class FigureServiceImpl implements FigureService {
     @Override
     @Transactional(readOnly = true)
     public List<RectangleDto> getAllRectangles() {
-        log.info("Запрос всех прямоугольникой.");
+        log.info("Запрос всех прямоугольников");
         return rectangleMapper.fromRectangleList(rectangleRepository.findAll());
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<CircleDto> getAllCircles() {
-        log.info("Запрос всех кругов.");
+        log.info("Запрос всех кругов");
         return circleMapper.fromCircleList(circleRepository.findAll());
     }
 
@@ -78,12 +78,13 @@ public class FigureServiceImpl implements FigureService {
         List<FigureDto> figureDtos = new ArrayList<>();
         figureDtos.addAll(rectangleMapper.fromRectangleList(rectangleRepository.findAllByColor(color)));
         figureDtos.addAll(circleMapper.fromCircleList(circleRepository.findAllByColor(color)));
-        log.info("Получение всех фигур цвета" + color);
+        log.info("Получение всех фигур цвета " + color);
         return figureDtos;
     }
 
     @Override
     public List<RectangleDto> getAllRectanglesByAscDiagonals() {
+        log.info("Получение всех прямоугольников в порядке возрастания площади");
         return getAllRectangles().stream().sorted(Comparator.comparing(RectangleDto::getDiagonal)).collect(Collectors.toList());
     }
 }

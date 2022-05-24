@@ -12,8 +12,8 @@ import java.util.List;
 public interface CircleMapper {
   CircleMapper MAPPER = Mappers.getMapper(CircleMapper.class);
 
-  Circle toCircle(CircleDto dto);
-  List<Circle> toCircleList(List<CircleDto> circles);
+  Circle toCircle(CircleDto circleDto);
+  List<Circle> toCircleList(List<CircleDto> circleDtos);
 
   @InheritInverseConfiguration
   CircleDto fromCircle(Circle circle);

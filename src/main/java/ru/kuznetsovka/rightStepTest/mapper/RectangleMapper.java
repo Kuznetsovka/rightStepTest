@@ -12,7 +12,7 @@ import java.util.List;
 public interface RectangleMapper {
   RectangleMapper MAPPER = Mappers.getMapper(RectangleMapper.class);
 
-  Rectangle toRectangle(RectangleDto dto);
+  Rectangle toRectangle(RectangleDto rectangleDto);
 
   List<Rectangle> toRectangleList(List<RectangleDto> rectangles);
 

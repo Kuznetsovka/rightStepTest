@@ -33,7 +33,7 @@ public class RestController {
     return figureService.getAllRectanglesByAscDiagonals();
   }
 
-  @GetMapping(value = "/rectangles",produces = "application/json" , params = {"c"})
+  @GetMapping(value = "/figures",produces = "application/json" , params = {"c"})
   public List<FigureDto> getAllFiguresByColorByAscArea(@RequestParam("c") Color color) {
     return figureService.getAllFiguresByColorByAscArea(color);
   }
