@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import ru.kuznetsovka.rightStepTest.domain.Color;
 import ru.kuznetsovka.rightStepTest.dto.CircleDto;
 import ru.kuznetsovka.rightStepTest.dto.FigureDto;
@@ -13,13 +14,13 @@ import ru.kuznetsovka.rightStepTest.service.FigureService;
 import java.util.List;
 
 
-@org.springframework.web.bind.annotation.RestController
-@RequestMapping("/")
-public class RestController {
+@RestController
+@RequestMapping()
+public class MyRestController {
   private final FigureService figureService;
 
   @Autowired
-  public RestController(FigureService figureService) {
+  public MyRestController(FigureService figureService) {
     this.figureService = figureService;
   }
 
